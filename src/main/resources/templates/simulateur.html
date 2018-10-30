@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		lang="en" class="bg-light" >
+<head>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+    background-image: url('../p1.jpg');
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+
+}
+tr {
+    line-height: 50%;
+}
+
+</style>
+<script type="text/javascript">
+	var bg=0;
+	var D=1000;
+	$(document).ready(function(){
+		 
+
+		//$('#carte').load(updateColorRow());
+		//updateColorRow();
+		$('#Go').click(function() {
+			$('#home').fadeOut(1000);
+			//updateColorRow();
+			$('.bgimg').animate({
+            	minHeight: '30%'
+        	},2000);
+			
+			$('#sim').animate({
+            	hidden: 'false'
+        	});
+
+
+		});
+		$('#ADD').click(function() {
+			if(bg<D){
+				bg=bg+1;
+				var val = (bg*100)/D;
+				$('#bar').css({"width": val+"%"});
+				$("#bar").text(bg+"");
+				$("#valBAR").val(bg+"");	
+			}
+			
+		});
+		$('#MIN').click(function() {
+			if(bg>0){
+				bg=bg-1;
+				var val = (bg*100)/D+"%";
+				$('#bar').css({"width": val});
+				$("#bar").text(bg+"");	
+				$("#valBAR").val(bg+"");
+			}
+			
+		});
+		
+	});
+	
+	function chargerTable(){
+		$('#carte').animate({
+            hidden: 'false'
+        },7000);
+	}
+	
+	function chargerFichier(){
+		document.getElementById("file").click();
+	}
+
+	function updateColorRow(){
+		var elem = document.getElementById("carte");
+		var somme=0;
+		for(var i=0;i<elem.rows.length;i++){
+			for(var j=0;j<elem.rows[0].cells.length;j++){
+				console.log(i+"/"+j+" => "+somme);
+				if(elem.rows[i].cells[j].innerHTML=="0") {
+					somme=somme+1;
+					console.log(i+"/"+j+" HHH=> "+somme);
+					if(somme==11)	{elem.rows[i].cells[j].style.background="red";somme=0;}
+					else			elem.rows[i].cells[j].style.background="blue";
+				}
+			}
+		}
+	}
+
+</script>
+</head>
+<body>
+<div id="ddd" class="bgimg w3-display-container w3-animate-opacity w3-text-white" style="max-height: 30%;">
+  <div class="w3-display-topleft w3-padding-large w3-xlarge">
+    Logo
+  </div>
+  <div id="home" class="w3-display-middle">
+    <h1 class="w3-jumbo w3-animate-top">Test The Simulator</h1>
+    <hr class="w3-border-grey" style="margin:auto;width:40%">
+    <p class="w3-large w3-center">35 days left</p>
+    <p class="w3-large w3-center"><button id="Go" type="button" class="btn btn-success w3-center" style="position: center;">Go</button></p>
+  </div>
+  
+</div>
+<br>
+
+<div id="sim">
+	<div class="container">
+		<h1>Les points de ravitaillement</h1>
+		<br>
+		<form method="post" enctype="multipart/form-data">
+		    <div class="form-inline form-group">
+		      <label for="file">Parcours:</label>
+		      <input id="file" hidden="true" type="file" class="form-control" placeholder="Enter file" name="file" style="margin-left: 115px;">
+		      <input type="button" class="btn btn-outline-primary btn-sm" style="margin-left: 170px;" onclick="chargerFichier();" value="Charger un parcours"></input>
+		    </div>
+		    <br>
+		    <div class="form-inline form-group">
+		    	<label for="distance">Distance de ravitaillement:	</label>
+		    	<div class="btn-group" style="margin-left: 50px;">
+    				<button id="MIN" type="button" style="border-radius: 50%;" class="btn btn-outline-primary btn-sm">-</button>
+			    	<div class="progress" style="height:10px;width:120px;margin-top: 10px;margin-left: 5px; ">
+	  					<div id="bar" class="progress-bar bg-secondary text-center" style="width:0%;"></div>
+	  				</div>
+			    	<button id="ADD" type="button" style="border-radius: 50%;margin-left: 5px;" class="btn btn-outline-primary btn-sm text-center">+</button>
+			  	</div>
+	  			<input id="valBAR" hidden="true" type="text" name="valeur" placeholder="0" style="margin-left: 20px;height: 20px;width: 100px;">  
+		    </div>
+		    <br>
+		    <button id="submit" class="btn btn-success rounded">Rafraichir la carte</button>
+		    <br>
+  		</form>
+  		
+		<br>
+		<br>
+	  	<table id="carte" class="table table-striped table-bordered text-center">
+	    	<tbody>
+	      		<tr th:each="rows : ${matrice}">
+					<td th:each="col : ${rows}" th:text="${col.point}" th:class="${col.ravitaillement} ? 'bg-danger' : (${col.inPath} ? 'bg-primary')">/>
+				</tr>
+					
+	    	</tbody>
+	  </table>
+</div>
+
+
+
+</div>
+
+
+
+</body>
+</html>
