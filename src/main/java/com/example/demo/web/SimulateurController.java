@@ -34,8 +34,9 @@ public class SimulateurController {
 				 model.addAttribute("fileRemarque", "Veuillez taper un fichier valide");
 			 }
 			 else {
-				 System.out.println(mat.get(0).size()+"/"+mat.get(0).size());
-				 traitement.searchForThePath(Integer.parseInt(val), mat);
+				 //System.out.println(mat.get(0).size()+"/"+mat.get(0).size());
+				 if(val.equals(""))	traitement.searchForThePath(0, mat);	
+				 else				traitement.searchForThePath(Integer.parseInt(val), mat);
 				 traitement.afficherParcours(mat);
 				 //model.addAttribute("distance",	Integer.parseInt(val));
 				 model.addAttribute("matrice", mat);

@@ -16,7 +16,7 @@ body,h1 {font-family: "Raleway", sans-serif}
 body, html {height: 100%}
 .bgimg {
     background-image: url('../p1.jpg');
-    min-height: 100%;
+    min-height: 30%;
     background-position: center;
     background-size: cover;
 
@@ -34,19 +34,9 @@ tr {
 
 		//$('#carte').load(updateColorRow());
 		//updateColorRow();
-		$('#Go').click(function() {
-			$('#home').fadeOut(1000);
-			//updateColorRow();
-			$('.bgimg').animate({
-            	minHeight: '30%'
-        	},2000);
-			
-			$('#sim').animate({
-            	hidden: 'false'
-        	});
-
-
-		});
+		$('#home').hidden();
+		
+		
 		$('#ADD').click(function() {
 			if(bg<D){
 				bg=bg+1;
@@ -107,7 +97,7 @@ tr {
     <h1 class="w3-jumbo w3-animate-top">Test The Simulator</h1>
     <hr class="w3-border-grey" style="margin:auto;width:40%">
     <p class="w3-large w3-center">35 days left</p>
-    <p class="w3-large w3-center"><button id="Go" type="button" class="btn btn-success w3-center" style="position: center;">Go</button></p>
+    
   </div>
   
 </div>
